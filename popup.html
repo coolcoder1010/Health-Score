@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Score Screen Analyzer</title>
+    <style>
+        /* CRUCIAL FIX: Ensure padding and border don't add to total width */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* --- DEFAULT (DARK) MODE STYLES --- */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1f2937; /* Default Dark Background */
+            color: #f3f4f6; /* Default Light Text */
+            width: 380px; /* Final safe width */
+            padding: 16px;
+        }
+        .container {
+            width: 100%;
+            background-color: #1f2937; /* Default Dark Background */ 
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #2dd4bf; /* Dark Mode Teal Accent */
+        }
+        p.text-center {
+            text-align: center;
+            color: #9ca3af; 
+        }
+        label {
+            display: block;
+            color: #e5e7eb;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        /* Input and Preview */
+        .image-preview-container {
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #374151;
+            display: block;
+        }
+        .image-preview {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        /* Button and Loading */
+        .flex-row-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .btn-primary {
+            flex-grow: 1;
+            background-color: #10b981; /* Dark Mode Green Button */
+            color: white;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #059669; /* Dark Mode Darker Green */
+            transform: translateY(-1px);
+        }
+        .btn-primary:disabled {
+            background-color: #4b5563;
+            cursor: not-allowed;
+        }
+        .loading-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: #2dd4bf; /* Dark Mode Teal Accent */
+            font-weight: 500;
+        }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 4px solid #2dd4bf; /* Dark Mode Teal Accent */
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Result Area */
+        .result-container {
+            margin-top: 10px;
+            display: none;
+        }
+        .result-box {
+            background-color: #374151;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #4b5563;
+        }
+        .result-area {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        /* --- LIGHT MODE OVERRIDES: RESPONSE BOX IS NOW LIGHTER --- */
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #ffffff;
+                color: #1f2937;
+            }
+            .container {
+                background-color: #ffffff; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            /* Deep Blue for Heading */
+            h1 {
+                color: #2563eb; /* Deep Blue Accent for H1 */
+            }
+            p.text-center {
+                color: #6b7280;
+            }
+            label {
+                color: #374151;
+            }
+            /* Vibrant Blue Button */
+            .btn-primary {
+                background-color: #3b82f6; /* Vibrant Blue Button */
+            }
+            .btn-primary:hover:not(:disabled) {
+                background-color: #2563eb; /* Darker Blue Hover */
+            }
+            /* Vibrant Blue Loading Spinner */
+            .loading-indicator {
+                color: #3b82f6;
+            }
+            .spinner {
+                border: 4px solid #3b82f6;
+                border-top-color: transparent;
+            }
+            
+            .image-preview-container {
+                border: 2px solid #d1d5db;
+            }
+            /* Response Box is Lighter */
+            .result-box {
+                background-color: #f9fafb; /* Lighter Gray Background */
+                border: 1px solid #d1d5db;
+            }
+            .result-area {
+                color: #4b5563;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Score Screen Analyzer</h1>
+        <p id="instruction-message" class="text-center">Click "Analyze" to score the image below.</p>
+
+        <div>
+            <label>Screenshot of Tab:</label>
+            <div id="image-preview-container" class="image-preview-container">
+                <img id="image-preview" class="image-preview" src="#" alt="Screenshot Preview" />
+            </div>
+        </div>
+
+        <div class="flex-row-container">
+            <button id="submit-button" class="btn-primary">
+                Analyze Image
+            </button>
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <span>Analyzing...</span>
+            </div>
+        </div>
+
+        <div id="result-container" class="result-container">
+            <label>Health Score's Response:</label>
+            <div class="result-box">
+                <p id="result-area" class="result-area"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

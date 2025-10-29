@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Health Score Image Analyzer",
+  "version": "1.0",
+  "description": "Opens as a standard popup and analyzes the screen via Gemini.",
+  
+  "permissions": [
+    "activeTab",      // Required for the screenshot API
+    "storage"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/"
+  ],
+  "action": {
+    "default_popup": "popup.html",  // <-- BACK TO STANDARD POPUP
+    "default_title": "Analyze Screen Selection",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}
