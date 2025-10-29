@@ -1,5 +1,5 @@
 // ** IMPORTANT: REPLACE 'YOUR_GEMINI_API_KEY_HERE' WITH YOUR ACTUAL KEY **
-const GEMINI_API_KEY = 'AIzaSyC7Mdu-brt_LdYmAW8N1HgQ5BaNBRx4488'; 
+const GEMINI_API_KEY = 'AIzaSyA9S0qmIoPfC70UkO9i8dULsdD4TdF_QHY'; 
 const API_URL_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=';
 
 // --- Global Variables ---
